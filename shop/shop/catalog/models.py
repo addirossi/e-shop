@@ -5,8 +5,8 @@ from django.db import models
 
 
 class Category (models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    slug = models.SlugField(max_length=50, db_index=True, unique=True, blank=True, null=True)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50, db_index=True, unique=True)
     parent = models.ForeignKey('self', null=True, blank=True)
 
     class Meta:
@@ -27,7 +27,6 @@ class Category (models.Model):
 class Product (models.Model):
     category = models.ForeignKey(Category, verbose_name='Category')
     name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(max_length=100, unique=True, blank=True, null=True, default='')
     description = models.TextField()
     price = models.CharField(max_length=6)
     image = models.ImageField(upload_to='products', blank=True, null=True)
