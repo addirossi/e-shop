@@ -1,3 +1,0 @@
-Django >=1.11, <2.0
-Pillow == 4.0.0
-MySQL-python
