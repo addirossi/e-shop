@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+</head>
+<body>
+    <section id="header">
+        <div class="top-container">
+            My demo shop
+        </div>
+        <div class="top-bl">
+            <div class="container">
+                <div class="cart">Ваша корзина пуста</div>
+            </div>
+        </div>
+    </section>
+    <section id="content row" class="container">
+        {% block content %}{% endblock content %}
+    </section>
+</body>
+</html>
