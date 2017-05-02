@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.core.urlresolvers import reverse
 
 
 class Category (models.Model):
@@ -23,6 +24,9 @@ class Category (models.Model):
     def is_leaf(self):
         return self.parent is not None
 
+    def get_absolute_url(self):
+        return reverse('shop:products-by-category', args=[self.slug])
+
 
 class Product (models.Model):
     category = models.ForeignKey(Category, verbose_name='Category')
@@ -41,4 +45,6 @@ class Product (models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('shop:product-details', args=[self.id])
 
