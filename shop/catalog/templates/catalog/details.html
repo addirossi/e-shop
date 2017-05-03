@@ -19,6 +19,13 @@
       <span>
         {{ product.description | linebreaks}}
       </span>
+      <p class="price">{{ product.price }} som.</p>
+      <form action="{% url "cart:cart-add" product.id %}" method="post">
+      {{ cart_product_form }}
+      {% csrf_token %}
+      <input type="submit" value="Add to cart">
+  </form>
     </div>
   </div>
+
 {% endblock %}

@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404
 from .models import Category, Product
+from shop.cart.forms import CartAddProductForm
 
 
 def products_list(request, category_slug=None):
@@ -21,6 +22,8 @@ def products_list(request, category_slug=None):
 
 def product_details(request, product_id):
     product = get_object_or_404(Product, id=product_id, available=True)
+    cart_product_form = CartAddProductForm()
     return render(request, 'catalog/details.html', {
         'product': product,
+        'cart_product_form':cart_product_form,
     })
