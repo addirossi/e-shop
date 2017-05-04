@@ -14,7 +14,18 @@
         </div>
         <div class="top-bl">
             <div class="container">
-                <div class="cart">Ваша корзина пуста</div>
+                <div class="cart">
+                    {% with total_items=cart|length %}
+                        {% if cart|length > 0 %}
+                            In your cart:
+                            <a href="{% url "cart:cart-detail" %}">
+                            {{ total_items }} prod. Sum: {{ cart.get_total_price }} som.
+                            </a>
+                        {% else %}
+                            Your cart is empty
+                        {% endif %}
+                    {% endwith %}
+                </div>
             </div>
         </div>
     </section>
