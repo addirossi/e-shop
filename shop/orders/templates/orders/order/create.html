@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Checkout
+{% endblock %}
+
+{% block content %}
+  <h1>Checkout</h1>
+  <div class="col-sm-4">
+    <h2>Please, fill the form</h2>
+    <form class="order-form" action="." method="post">
+      {{ form.as_p }}
+      {% csrf_token %}
+      <input type="submit" value="Send">
+    </form>
+  </div>
+
+  <div class="order-info col-sm-8">
+    <h2>Your order</h2>
+    <ul>
+      {% for item in cart  %}
+        <li>
+          {{ item.product.name }} | Quantity: {{ item.quantity }} | Total sum: {{ item.total_price }}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
