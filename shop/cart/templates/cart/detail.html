@@ -27,11 +27,12 @@
               </a>
             </td>
             <td>{{ product.name }}</td>
-            <td><form action="{% url "cart:cart-add" product.id %}" method="post" class="add">
+            <td><form class="cart-update-form"
+                    action="{% url "cart:cart-add" product.id %}" method="post" class="add" data-redirect="{% url 'cart:cart-detail' %}">
                 {{ item.update_quantity_form.quantity }}
                 {{ item.update_quantity_form.update }}
                 {% csrf_token %}
-                <input type="submit" value="Update">
+{#                <input type="submit" value="Update">#}
                 </form>
             </td>
             <td><a href="{% url "cart:cart-remove" product.id %}">Delete</a></td>
@@ -52,3 +53,23 @@
     <a href="{% url "orders:order-create" %}" class="btn">Proceed checkout</a>
   </p>
 {% endblock %}
+{% block js %}
+    <script>
+    (function ($) {
+        var $form = $('.cart-update-form');
+
+        $form.ajaxForm(function (res) {
+           if (res.status === 'ok') {
+               alert('Success');
+           } else {
+               alert('Error');
+           }
+        });
+
+        $('select[name="quantity"]').change(function () {
+            var $thisForm = $(this).closest('form');
+            $thisForm.submit();
+        })
+    })(jQuery);
+    </script>
+{% endblock js %}

@@ -10,27 +10,47 @@
 <body>
     <section id="header">
         <div class="top-container">
-            My demo shop
+            <div class="row">
+                <div id="logo" class="col-sm-2">My demo shop</div>
+                <div id="search" class="col-sm-6">
+                    <form type="get" action="." id="searchform">
+                        <input  id="search_box" type="search" name="search_box"  placeholder="Search..." >
+                        <button id="search_submit" type="submit" value="Search">Submit</button>
+                    </form>
+                </div>
+                <div id="cart" class="col-sm-4">
+                    <div class="cart">
+                        {% with total_items=cart|length %}
+                            {% if cart|length > 0 %}
+                                In your cart:
+                                <a href="{% url "cart:cart-detail" %}">
+                                {{ total_items }} prod. Sum: {{ cart.get_total_price }} som.
+                                </a>
+                            {% else %}
+                                Your cart is empty
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="top-bl">
             <div class="container">
-                <div class="cart">
-                    {% with total_items=cart|length %}
-                        {% if cart|length > 0 %}
-                            In your cart:
-                            <a href="{% url "cart:cart-detail" %}">
-                            {{ total_items }} prod. Sum: {{ cart.get_total_price }} som.
-                            </a>
-                        {% else %}
-                            Your cart is empty
-                        {% endif %}
-                    {% endwith %}
-                </div>
+                <ul class="main_menu">
+                  {% for cat in categories %}
+                    <li {% if category.slug == cat.slug %} class="selected" {% endif %}>
+                      <a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
             </div>
         </div>
     </section>
     <section id="content row" class="container">
         {% block content %}{% endblock content %}
     </section>
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery.form.min.js' %}"></script>
+    {% block js %}{% endblock js %}
 </body>
 </html>

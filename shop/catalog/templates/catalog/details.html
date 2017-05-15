@@ -20,7 +20,7 @@
         {{ product.description | linebreaks}}
       </span>
       <p class="price">{{ product.price }} som.</p>
-      <form action="{% url "cart:cart-add" product.id %}" method="post">
+      <form action="{% url "cart:cart-add" product.id %}" method="post" id="cart-add-form" data-redirect="{% url 'cart:cart-detail' %}">
       {{ cart_product_form }}
       {% csrf_token %}
       <input type="submit" value="Add to cart">
@@ -29,3 +29,18 @@
   </div>
 
 {% endblock %}
+{% block js %}
+    <script>
+        (function ($) {
+            var $form = $('#cart-add-form');
+            $form.ajaxForm(function (res) {
+                if(res.status === 'ok' && res.redirect) {
+                    window.location = $form.data('redirect');
+                } else {
+                    alert('Error', res.status);
+                }
+                console.log(res);
+            });
+        })(jQuery);
+    </script>
+{% endblock js %}
