@@ -10,8 +10,8 @@ body{
   text-transform: uppercase;
 }
 .top-bl{
-  background: #bebebe;
-  padding: 15px;
+  background-color: #d50000;
+  padding: 10 15px;
 }
 .top-bl .cart{
   float: right;
@@ -117,12 +117,14 @@ thead{
   display: inline-block;
   padding: 10px;
   text-decoration: none;
+  background-color: #d50000;
 }
 .main_menu li:hover {
-  background-color: #5e5e5e;
+  background-color: #c4250c;
 }
 .main_menu li a{
   color: #ffffff;
+  font-weight: 700;
 }
 .main_menu li a:hover{
   color: #ffffff;

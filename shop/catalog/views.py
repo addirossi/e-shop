@@ -25,5 +25,5 @@ def product_details(request, product_id):
     cart_product_form = CartAddProductForm()
     return render(request, 'catalog/details.html', {
         'product': product,
-        'cart_product_form':cart_product_form,
+        'cart_product_form': cart_product_form,
     })
