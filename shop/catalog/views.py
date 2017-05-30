@@ -2,21 +2,27 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404
-from .models import Category, Product
+from .models import Category, Product, Brand
 from shop.cart.forms import CartAddProductForm
 
 
-def products_list(request, category_slug=None):
+def products_list(request, category_slug=None, brand_id=None):
     category = None
     categories = Category.objects.all()
-    products = Product.objects.filter(available=True)
+    brands = Brand.objects.all()
+    products = Product.objects.all()
+    brand_id = request.GET.get('brand')
+    if brand_id:
+        brand_id = int(brand_id)
+        products = products.filter(brand_id=brand_id)
     if category_slug:
-        category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=category)
+        products = products.filter(category__slug=category_slug)
     return render(request, 'catalog/list.html', {
         'category': category,
         'categories': categories,
         'products': products,
+        'brands': brands,
+        'brand_id': brand_id,
     })
 
 

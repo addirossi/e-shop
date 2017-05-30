@@ -9,16 +9,41 @@
 {% block content %}
   <div id="sidebar" class="col-sm-3">
     <h3>Categories</h3>
-    <ul>
-      <li {% if not category %} class="selected" {% endif %}>
-        <a href="{% url "shop:products-list" %}">All</a>
-      </li>
-      {% for cat in categories %}
-        <li {% if category.slug == cat.slug %} class="selected" {% endif %}>
-          <a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
-        </li>
-      {% endfor %}
-    </ul>
+{#  <form>#}
+{#      <select name="brand">#}
+{##}
+{#          {% for b in brands %}#}
+{#              {% if brand.id == b.id %}#}
+{#                <option value="{{ b.id }}">{{ b.brand }}</option>#}
+{#              {% endif %}#}
+{#          {% endfor %}#}
+{#      </select>#}
+{#  </form>#}
+{#    <ul>#}
+{#      <li {% if not brand_id %} class="selected" {% endif %}>#}
+{#          <a href="{% url "shop:products-list" %}">All</a>#}
+{#      </li>#}
+{#      {% for b in brands %}#}
+{#          <li {% if brand_id == b.id %} class="selected" {% endif %}>#}
+{#            <a href="?brand={{ b.id }}">{{ b.brand }}</a>#}
+{#          </li>#}
+{#      {% endfor %}#}
+{#    </ul>#}
+    <form method="get">
+        {% for b in brands %}
+            <input type="checkbox" value="{{ b.brand }}">{{ b.brand }}
+        {% endfor %}
+    </form>
+{#    <ul>#}
+{#      <li {% if not category %} class="selected" {% endif %}>#}
+{##}
+{#      </li>#}
+{#      {% for cat in categories %}#}
+{#        <li {% if category.slug == cat.slug %} class="selected" {% endif %}>#}
+{#          <a href="#">{{ cat.name }}</a>#}
+{#        </li>#}
+{#      {% endfor %}#}
+{#    </ul>#}
   </div>
   <div id="main" class="product_list col-sm-9">
     <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
@@ -33,5 +58,6 @@
         </div>
       {% endfor %}
     </div>
-  </div>
+    </div>
+
 {% endblock content %}

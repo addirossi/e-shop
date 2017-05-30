@@ -8,49 +8,87 @@
     <link rel="stylesheet" href="{% static "css/style.css" %}">
 </head>
 <body>
-    <section id="header">
-        <div class="top-container">
-            <div class="row">
-                <div id="logo" class="col-sm-2">My demo shop</div>
-                <div id="search" class="col-sm-6">
-                    <form type="get" action="." id="searchform">
-                        <input  id="search_box" type="search" name="search_box"  placeholder="Search..." >
-                        <button id="search_submit" type="submit" value="Search">Submit</button>
-                    </form>
-                </div>
-                <div id="cart" class="col-sm-4">
-                    <div class="cart">
-                        {% with total_items=cart|length %}
-                            {% if cart|length > 0 %}
-                                In your cart:
-                                <a href="{% url "cart:cart-detail" %}">
-                                {{ total_items }} prod. Sum: {{ cart.get_total_price }} som.
-                                </a>
-                            {% else %}
-                                Your cart is empty
-                            {% endif %}
-                        {% endwith %}
-                    </div>
-                </div>
-            </div>
+
+{#    <section id="header">#}
+{#        <div class="top-container">#}
+{#            <div class="row">#}
+{#                <div id="logo" class="col-sm-2">My demo shop</div>#}
+{#                <div id="search" class="col-sm-6">#}
+{#                    <form type="get" action="." id="searchform">#}
+{#                        <input  id="search_box" type="search" name="search_box"  placeholder="Search..." >#}
+{#                        <button id="search_submit" type="submit" value="Search">Submit</button>#}
+{#                    </form>#}
+{#                </div>#}
+{#                <div id="cart" class="col-sm-4">#}
+{#                    <div class="cart">#}
+{#                        {% with total_items=cart|length %}#}
+{#                            {% if cart|length > 0 %}#}
+{#                                In your cart:#}
+{#                                <a href="{% url "cart:cart-detail" %}">#}
+{#                                {{ total_items }} prod. Sum: {{ cart.get_total_price }} som.#}
+{#                                </a>#}
+{#                            {% else %}#}
+{#                                Your cart is empty#}
+{#                            {% endif %}#}
+{#                        {% endwith %}#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="top-bl">#}
+{#            <div class="container">#}
+{#                <ul class="nav nav-pills">#}
+
+{#                </ul>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+    <div class="top-nav">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <p>Welcome to our site.</p>
+          </div>
         </div>
-        <div class="top-bl">
-            <div class="container">
-                <ul class="main_menu">
-                  {% for cat in categories %}
+      </div>
+    </div><!-- /top-nav -->
+    <!-- navbar -->
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Brand</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            {% for cat in categories %}
                     <li {% if category.slug == cat.slug %} class="selected" {% endif %}>
                       <a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
                     </li>
-                  {% endfor %}
-                </ul>
-            </div>
-        </div>
-    </section>
+            {% endfor %}
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav><!-- /navbar -->
     <section id="content row" class="container">
         {% block content %}{% endblock content %}
     </section>
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script src="{% static 'js/jquery.form.min.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $("#home").addClass("add");
+        });
+    </script>
+
     {% block js %}{% endblock js %}
 </body>
 </html>

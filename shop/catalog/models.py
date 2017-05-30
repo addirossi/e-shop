@@ -28,11 +28,26 @@ class Category (models.Model):
         return reverse('shop:products-by-category', args=[self.slug])
 
 
+class Brand (models.Model):
+    brand = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return self.brand
+
+    def __str__(self):
+        return self.brand
+
+    def get_absolute_url(self):
+        return reverse('shop:products-by-brand', args=[self.id])
+
 class Product (models.Model):
     category = models.ForeignKey(Category, verbose_name='Category')
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField()
-    price = models.CharField(max_length=6)
+    brand = models.ForeignKey(Brand, related_name='products', blank=True, null=True)
+    size = models.CharField(max_length=2, blank=True)
+    color = models.CharField(max_length=20, blank=True)
+    price = models.PositiveIntegerField()
     image = models.ImageField(upload_to='products', blank=True, null=True)
     stock = models.PositiveIntegerField()
     available = models.BooleanField(default=True, verbose_name='Available')
@@ -47,4 +62,3 @@ class Product (models.Model):
 
     def get_absolute_url(self):
         return reverse('shop:product-details', args=[self.id])
-
