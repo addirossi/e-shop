@@ -21,10 +21,10 @@
       </span>
       <p class="price">{{ product.price }} som.</p>
       <form action="{% url "cart:cart-add" product.id %}" method="post" id="cart-add-form" data-redirect="{% url 'cart:cart-detail' %}">
-      {{ cart_product_form }}
-      {% csrf_token %}
-      <input type="submit" value="Add to cart">
-  </form>
+          {{ cart_product_form }}
+          {% csrf_token %}
+          <input type="submit" value="Add to cart">
+      </form>
     </div>
   </div>
 

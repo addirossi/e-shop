@@ -146,3 +146,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'shop/media')
 REDIRECT_URL = '/'
 LOGIN_URL = '/sign-in/'
 CART_SESSION_ID = 'cart'
+
+AUTH_USER_MODEL = 'accounts.MyUser'

@@ -34,18 +34,6 @@ class MyUserManager(models.Manager):
         return self._create_user(email, password, **extra_fields)
 
     def get_by_natural_key(self, username):
-
-        '''
-        Example: objects = MyUserManager()
-                 objects.get_by_natural_key('555000111')
-        Explanation:
-          The same as MyUser.objects.get()
-          1. **{ 'email': 'user@gmail.com' }
-          2. email='user@gmail.com'
-          3. self.get(email='user@gmail.com')
-          4. MyUser.objects.get(email='user@gmail.com')
-        '''
-
         return self.get(**{self.model.USERNAME_FIELD: username})
 
 
@@ -62,12 +50,8 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     object = MyUserManager()
 
     def get_full_name(self):
-        """
-        Returns the first_name plus the last_name, with a space in between.
-        """
         full_name = '%s %s' % (self.first_name, self.last_name)
         return full_name.strip()
 
     def get_short_name(self):
-        "Returns the short name for the user."
         return self.first_name

@@ -1,74 +1,111 @@
-{% extends "base.html" %}
-
-{% block title %}
-  Your cart
-{% endblock %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-  <h1>Your cart</h1>
-  <table class="cart">
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Remove</th>
-        <th>Total price</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in cart %}
-        {% with product=item.product %}
-          <tr>
-            <td>
-              <a href="{{ product.get_absolute_url }}">
-                <img src="{{ product.image.url }}" alt="" />
-              </a>
-            </td>
-            <td>{{ product.name }}</td>
-            <td><form class="cart-update-form"
-                    action="{% url "cart:cart-add" product.id %}" method="post" class="add" data-redirect="{% url 'cart:cart-detail' %}">
-                {{ item.update_quantity_form.quantity }}
-                {{ item.update_quantity_form.update }}
-                {% csrf_token %}
-{#                <input type="submit" value="Update">#}
-                </form>
-            </td>
-            <td><a href="{% url "cart:cart-remove" product.id %}">Delete</a></td>
-            <td class="num">{{ item.price }} руб.</td>
-            <td class="num">{{ item.total_price }} som.</td>
-          </tr>
-        {% endwith %}
-      {% endfor %}
-        <tr class="total">
-          <td>Total</td>
-          <td colspan="4"></td>
-          <td class="num">{{ cart.get_total_price }} som.</td>
-        </tr>
-    </tbody>
-  </table>
-  <p class="text-right">
-    <a href="{% url "shop:products-list"%}" class="btn">Continue shopping</a>
-    <a href="{% url "orders:order-create" %}" class="btn">Proceed checkout</a>
-  </p>
-{% endblock %}
+    <div class="columns-container">
+        <div class="container" id="columns">
+            <!-- breadcrumb -->
+            <div class="breadcrumb clearfix">
+                <a class="home" href="#" title="Return to Home">Home</a>
+                <span class="navigation-pipe">&nbsp;</span>
+                <span class="navigation_page">Your shopping cart</span>
+            </div>
+            <!-- ./breadcrumb -->
+            <!-- page heading-->
+            <h2 class="page-heading no-line">
+                <span class="page-heading-title2">Shopping Cart Summary</span>
+            </h2>
+            <!-- ../page heading-->
+            <div class="page-content page-order">
+                <div class="heading-counter warning">
+                    {% with total_items=cart|length %}
+                        {% if cart|length > 0 %}
+                            <span>Your shopping cart contains:</span>
+                            <span>{{ total_items }} Product(s)</span>
+                        {% else %}
+                            <span>Your shopping cart contains:</span>
+                            <span>0 Product(s)</span>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="order-detail-content">
+                    <table class="table table-bordered table-responsive cart_summary">
+                        <thead>
+                            <tr>
+                                <th class="cart_product">Product</th>
+                                <th>Description</th>
+                                <th>Avail.</th>
+                                <th>Unit price</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                                <th  class="action"><i class="fa fa-trash-o"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart %}
+                                {% with product=item.product %}
+                                    <tr>
+                                        <td class="cart_product">
+                                            <a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" alt="Product"></a>
+                                        </td>
+                                        <td class="cart_description">
+                                            <p class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></p>
+                                            <small class="cart_ref">SKU : #123654999</small><br>
+                                            <small><a href="#">Color : Beige</a></small><br>
+                                            <small><a href="#">Size : S</a></small>
+                                        </td>
+                                        <td class="cart_avail"><span class="label label-success">In stock</span></td>
+                                        <td class="price">$ <span>{{ item.price }}</span></td>
+                                        <td class="qty">
+                                            <form class="cart-update-form" action="{% url "cart:cart-add" product.id %}" method="post" class="add" data-redirect="{% url 'cart:cart-detail' %}">
+                                                {{ item.update_quantity_form.quantity }}
+                                                {{ item.update_quantity_form.update }}
+                                                {% csrf_token %}
+                                            </form>
+                                        </td>
+                                        <td class="price">
+                                            $ <span id="total-price">{{ item.total_price }}</span>
+                                        </td>
+                                        <td class="action">
+                                            <a href="{% url "cart:cart-remove" product.id %}">Delete item</a>
+                                        </td>
+                                    </tr>
+                                {% endwith %}
+                            {% endfor %}
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" rowspan="2"></td>
+                                <td colspan="3">Total products (tax incl.)</td>
+                                <td colspan="2">$ {{ cart.get_total_price }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><strong>Total</strong></td>
+                                <td colspan="2"><strong>$ {{ cart.get_total_price }}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="cart_navigation">
+                        <a class="prev-btn" href="{% url "shop:products-list"%}">Continue shopping</a>
+                        <a class="next-btn" href="{% url "orders:order-create" %}">Proceed to checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
 {% block js %}
     <script>
     (function ($) {
         var $form = $('.cart-update-form');
-
-        $form.ajaxForm(function (res) {
-           if (res.status === 'ok') {
-               alert('Success');
-           } else {
-               alert('Error');
-           }
-        });
-
+        $form.ajaxForm();
         $('select[name="quantity"]').change(function () {
+            console.log('a')
             var $thisForm = $(this).closest('form');
             $thisForm.submit();
+            location.reload();
         })
     })(jQuery);
     </script>
