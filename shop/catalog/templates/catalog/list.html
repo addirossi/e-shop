@@ -612,13 +612,16 @@
 {#                            </select>#}
 {#                        </div>#}
                         <div class="sort-product">
-                            <select>
-                                <option value="">Product Name</option>
-                                <option value="">Price</option>
+                            <form id="product-sort-form">
+                            <select name="sort" id="id_sort-products">
+                                <option value="name" {% if sort_field == 'name' %}selected{% endif %}>Product Name</option>
+                                <option value="price" {% if sort_field == 'price' %}selected{% endif %}>Price</option>
                             </select>
+                            <input type="hidden" name="order" id="id_sort-order" value="{{ sort_order }}">
                             <div class="sort-product-icon">
-                                <i class="fa fa-sort-alpha-asc"></i>
+                                <i id="id_sort-order-btn" class="fa fa-sort-alpha-{{ sort_order }}"></i>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -634,11 +637,24 @@
     <script>
         (function ($) {
             var $form = $('.cart-add-form');
+            var $sortProductsForm = $('#product-sort-form');
+            var $productsOrderDirection = $('#id_sort-order');
             $form.ajaxForm(function (res) {
                 if(res.status === 'ok' && res.redirect) {
                     location.reload();
                 }
                 location.reload();
+            });
+
+            $('#id_sort-products').on('change', function () {
+                $sortProductsForm.submit();
+            });
+
+            $('#id_sort-order-btn').on('click', function () {
+                var order = $productsOrderDirection.val();
+                var newVal = order === 'asc' ? 'desc' : 'asc';
+                $productsOrderDirection.val(newVal);
+                $sortProductsForm.submit();
             });
         })(jQuery);
     </script>

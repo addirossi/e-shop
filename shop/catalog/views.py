@@ -11,6 +11,9 @@ from shop.cart.forms import CartAddProductForm
 def products_list(request, category_slug=None):
     category = get_object_or_404(Category, slug=category_slug) if category_slug else None
 
+    sort_field = request.GET.get('sort', 'name')
+    sort_order = request.GET.get('order', 'asc')
+
     filtered_brands = request.GET.getlist('filter-brand', None)
 
     filtered_brands = [int(x) for x in filtered_brands]
@@ -29,6 +32,10 @@ def products_list(request, category_slug=None):
 
     brands = brands.distinct()
 
+    if sort_order == 'desc':
+        sort_field = '-{}'.format(sort_field)
+    products = products.order_by(sort_field)
+
     cart_product_form = CartAddProductForm()
 
     return render(request, 'catalog/list.html', {
@@ -38,6 +45,9 @@ def products_list(request, category_slug=None):
         'cart_product_form': cart_product_form,
         'brands': brands,
         'filtered_brands': filtered_brands,
+        'sort_field': sort_field,
+        'sort_order': sort_order,
+        'cart_product_form': cart_product_form
     })
 
 
