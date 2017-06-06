@@ -72,17 +72,18 @@
                         <div class="block_content">
                             <!-- layered -->
                             <div class="layered layered-filter-price">
+                                <form>
                                 <!-- filter categgory -->
                                 <div class="layered_subtitle">CATEGORIES</div>
                                 <div class="layered-content">
                                     <ul class="check-box-list">
 
                                             {% for brand in brands %}
-                                                <li>
-                                                    <input type="checkbox" id="{{ brand.id }}" name="cc" />
-                                                    <label for="c3">
-{#                                                    <span class="button"></span>#}
-                                                        <a href="{{ brand.get_absolute_url }}">{{ brand.brand }}</a>
+                                                <li >
+                                                    <input style="display: none" type="checkbox" id="brand-{{ brand.id }}" name="filter-brand" value="{{ brand.id }}" {% if brand.id in filtered_brands %}checked{% endif %} />
+                                                    <label for="brand-{{ brand.id }}">
+                                                       <span class="button"></span>
+                                                       {{ brand.brand }}
                                                     </label>
                                                 </li>
                                             {% endfor %}
@@ -346,6 +347,10 @@
                                     </ul>
                                 </div>
                                 <!-- ./filter size -->
+                                <div>
+                                    <button type="submit" class="btn filter-btn">Find</button>
+                                </div>
+                                </form>
                             </div>
                             <!-- ./layered -->
 
@@ -598,14 +603,14 @@
                               </ul>
                             </nav>
                         </div>
-                        <div class="show-product-item">
-                            <select name="">
-                                <option value="">Show 18</option>
-                                <option value="">Show 20</option>
-                                <option value="">Show 50</option>
-                                <option value="">Show 100</option>
-                            </select>
-                        </div>
+{#                        <div class="show-product-item">#}
+{#                            <select name="">#}
+{#                                <option value="">Show 18</option>#}
+{#                                <option value="">Show 20</option>#}
+{#                                <option value="">Show 50</option>#}
+{#                                <option value="">Show 100</option>#}
+{#                            </select>#}
+{#                        </div>#}
                         <div class="sort-product">
                             <select>
                                 <option value="">Product Name</option>

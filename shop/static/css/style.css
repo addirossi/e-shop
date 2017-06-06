@@ -5233,3 +5233,13 @@ span.notify-right{
 .shopping-cart-box-ontop span.notify-left{
     bottom: 12px !important;
 }
+
+.filter-btn {
+    width: 120px;
+    border: 1px solid #ff3366;
+    color: #ff3366;
+    display: block;
+    margin: 0 auto;
+    background: #ff3366;
+    color: #fff;
+}

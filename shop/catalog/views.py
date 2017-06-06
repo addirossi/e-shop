@@ -9,23 +9,35 @@ from shop.cart.forms import CartAddProductForm
 
 
 def products_list(request, category_slug=None):
-    category = None
+    category = get_object_or_404(Category, slug=category_slug) if category_slug else None
+
+    filtered_brands = request.GET.getlist('filter-brand', None)
+
+    filtered_brands = [int(x) for x in filtered_brands]
+
     categories = Category.objects.filter(parent__isnull=True)
 
     products = Product.objects.filter(available=True)
-    # brand_id = request.GET.get('brand')
-    # if brand_id:
-    #     brand_id = int(brand_id)
-    #     products = products.filter(brand_id=brand_id)
-    if category_slug:
-        products = products.filter(category__slug=category_slug)
-        # brands = Brand.objects.filter(products__category__slug=category_slug)
+    brands = Brand.objects.all()
+
+    if filtered_brands:
+        products = products.filter(brand__id__in=filtered_brands)
+
+    if category:
+        products = products.filter(category=category)
+        brands = brands.filter(products__category=category)
+
+    brands = brands.distinct()
+
     cart_product_form = CartAddProductForm()
+
     return render(request, 'catalog/list.html', {
         'category': category,
         'categories': categories,
         'products': products,
-        'cart_product_form': cart_product_form
+        'cart_product_form': cart_product_form,
+        'brands': brands,
+        'filtered_brands': filtered_brands,
     })
 
 
