@@ -10,6 +10,9 @@ from shop.cart.forms import CartAddProductForm
 
 def products_list(request, category_slug=None):
     category = None
+
+    sort_field = request.GET.get('sort', 'name')
+    sort_order = request.GET.get('order', 'asc')
     categories = Category.objects.filter(parent__isnull=True)
 
     products = Product.objects.filter(available=True)
@@ -20,11 +23,18 @@ def products_list(request, category_slug=None):
     if category_slug:
         products = products.filter(category__slug=category_slug)
         # brands = Brand.objects.filter(products__category__slug=category_slug)
+
+    if sort_order == 'desc':
+        sort_field = '-{}'.format(sort_field)
+    products = products.order_by(sort_field)
+
     cart_product_form = CartAddProductForm()
     return render(request, 'catalog/list.html', {
         'category': category,
         'categories': categories,
         'products': products,
+        'sort_field': sort_field,
+        'sort_order': sort_order,
         'cart_product_form': cart_product_form
     })
 
