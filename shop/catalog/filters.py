@@ -1,13 +1,18 @@
 import django_filters
+from django import forms
+from shop.catalog.models import Product, Brand
 
-from shop.catalog.models import Product
+
+def brands(request):
+    category = request.category
+    return category.brand_set.all()
 
 
 class ProductFilter(django_filters.FilterSet):
-    size = django_filters.ModelMultipleChoiceFilter(Product, queryset=Product.objects.all())
+    brands = django_filters.ModelMultipleChoiceFilter(queryset=Brand.objects.all(), widget=forms.CheckboxSelectMultiple)
+
     class Meta:
         model = Product
-        fields = {'brand': ['exact', 'icontains'],
-                  'price': ['exact', 'gte', 'lte'],
+        fields = {'price': ['exact', 'gte', 'lte'],
                   'size': ['exact']
                  }

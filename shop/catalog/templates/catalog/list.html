@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
 {% block title %}{% if category %}{{ category.name }}{% else %}Products list{% endif %}{% endblock title %}
 {% block content %}
     <div class="columns-container">
@@ -16,6 +23,7 @@
                 <!-- Left colunm -->
                 <div class="column col-xs-12 col-sm-3" id="left_column">
                     <!-- block category -->
+
                     <div class="block left-module">
                         <p class="title_block">Product types</p>
                         <div class="block_content">
@@ -26,22 +34,31 @@
                                         <li class="active">
                                             <span></span><a href="#">Tops</a>
                                             <ul>
-                                                <li><span></span><a href="#">T-shirts</a></li>
-                                                <li><span></span><a href="#">Dresses</a></li>
-                                                <li><span></span><a href="#">Casual</a></li>
-                                                <li><span></span><a href="#">Evening</a></li>
-                                                <li><span></span><a href="#">Summer</a></li>
-                                                <li><span></span><a href="#">Bags & Shoes</a></li>
-                                                <li><span></span><a href="#"><span></span>Blouses</a></li>
+{#                                                {% for category in categories %}#}
+{#                                                    {% for sub in subcat %}#}
+{#                                                        <li><span></span><a href="#">{{ sub.name }}</a></li>#}
+{#                                                    {% endfor %}#}
+{#                                                {% endfor %}#}
+{#                                                <li><span></span><a href="#">T-shirts</a></li>#}
+{#                                                <li><span></span><a href="#">Dresses</a></li>#}
+{#                                                <li><span></span><a href="#">Casual</a></li>#}
+{#                                                <li><span></span><a href="#">Evening</a></li>#}
+{#                                                <li><span></span><a href="#">Summer</a></li>#}
+{#                                                <li><span></span><a href="#">Bags & Shoes</a></li>#}
+{#                                                <li><span></span><a href="#"><span></span>Blouses</a></li>#}
                                             </ul>
                                         </li>
-                                        <li><span></span><a href="#">T-shirts</a></li>
-                                        <li><span></span><a href="#">Dresses</a></li>
-                                        <li><span></span><a href="#">Jackets and coats </a></li>
-                                        <li><span></span><a href="#">Knitted</a></li>
-                                        <li><span></span><a href="#">Pants</a></li>
-                                        <li><span></span><a href="#">Bags & Shoes</a></li>
-                                        <li><span></span><a href="#">Best selling</a></li>
+                                        {% if subcats %}
+                                            {% for subcat in subcats %}
+                                                <li><span></span><a href="#">{{ subcat.name }}</a></li>
+                                            {% endfor %}
+                                        {% endif %}
+{#                                        <li><span></span><a href="#">Dresses</a></li>#}
+{#                                        <li><span></span><a href="#">Jackets and coats </a></li>#}
+{#                                        <li><span></span><a href="#">Knitted</a></li>#}
+{#                                        <li><span></span><a href="#">Pants</a></li>#}
+{#                                        <li><span></span><a href="#">Bags & Shoes</a></li>#}
+{#                                        <li><span></span><a href="#">Best selling</a></li>#}
                                     </ul>
                                 </div>
                             </div>
@@ -59,62 +76,65 @@
                                 <div class="layered_subtitle">CATEGORIES</div>
                                 <div class="layered-content">
                                     <ul class="check-box-list">
-                                        <li>
-                                            <input type="checkbox" id="c1" name="cc" />
-                                            <label for="c1">
-                                            <span class="button"></span>
-                                            Tops<span class="count">(10)</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c2" name="cc" />
-                                            <label for="c2">
-                                            <span class="button"></span>
-                                            T-shirts<span class="count">(10)</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c3" name="cc" />
-                                            <label for="c3">
-                                            <span class="button"></span>
-                                            Dresses<span class="count">(10)</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c4" name="cc" />
-                                            <label for="c4">
-                                            <span class="button"></span>
-                                            Jackets and coats<span class="count">(10)</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c5" name="cc" />
-                                            <label for="c5">
-                                            <span class="button"></span>
-                                            Knitted<span class="count">(10)</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c6" name="cc" />
-                                            <label for="c6">
-                                            <span class="button"></span>
-                                            Pants<span class="count">(10)</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c7" name="cc" />
-                                            <label for="c7">
-                                            <span class="button"></span>
-                                            Bags & Shoes<span class="count">(10)</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="c8" name="cc" />
-                                            <label for="c8">
-                                            <span class="button"></span>
-                                            Best selling<span class="count">(10)</span>
-                                            </label>
-                                        </li>
+
+                                            {% for brand in brands %}
+                                                <li>
+                                                    <input type="checkbox" id="{{ brand.id }}" name="cc" />
+                                                    <label for="c3">
+{#                                                    <span class="button"></span>#}
+                                                        <a href="{{ brand.get_absolute_url }}">{{ brand.brand }}</a>
+                                                    </label>
+                                                </li>
+                                            {% endfor %}
+{#                                        <li>#}
+{#                                            <input type="checkbox" id="c2" name="cc" />#}
+{#                                            <label for="c2">#}
+{#                                            <span class="button"></span>#}
+{#                                            T-shirts<span class="count">(10)</span>#}
+{#                                            </label>#}
+{#                                        </li>#}
+{#                                        <li>#}
+{#                                            <input type="checkbox" id="c3" name="cc" />#}
+{#                                            <label for="c3">#}
+{#                                            <span class="button"></span>#}
+{#                                            Dresses<span class="count">(10)</span>#}
+{#                                            </label>#}
+{#                                        </li>#}
+{#                                        <li>#}
+{#                                            <input type="checkbox" id="c4" name="cc" />#}
+{#                                            <label for="c4">#}
+{#                                            <span class="button"></span>#}
+{#                                            Jackets and coats<span class="count">(10)</span>#}
+{#                                            </label>#}
+{#                                        </li>#}
+{#                                        <li>#}
+{#                                            <input type="checkbox" id="c5" name="cc" />#}
+{#                                            <label for="c5">#}
+{#                                            <span class="button"></span>#}
+{#                                            Knitted<span class="count">(10)</span>#}
+{#                                            </label>#}
+{#                                        </li>#}
+{#                                        <li>#}
+{#                                            <input type="checkbox" id="c6" name="cc" />#}
+{#                                            <label for="c6">#}
+{#                                            <span class="button"></span>#}
+{#                                            Pants<span class="count">(10)</span>#}
+{#                                            </label>#}
+{#                                        </li>#}
+{#                                        <li>#}
+{#                                            <input type="checkbox" id="c7" name="cc" />#}
+{#                                            <label for="c7">#}
+{#                                            <span class="button"></span>#}
+{#                                            Bags & Shoes<span class="count">(10)</span>#}
+{#                                            </label>#}
+{#                                        </li>#}
+{#                                        <li>#}
+{#                                            <input type="checkbox" id="c8" name="cc" />#}
+{#                                            <label for="c8">#}
+{#                                            <span class="button"></span>#}
+{#                                            Best selling<span class="count">(10)</span>#}
+{#                                            </label>#}
+{#                                        </li>#}
                                     </ul>
                                 </div>
                                 <!-- ./filter categgory -->
@@ -348,6 +368,7 @@
                         <p class="title_block">SPECIAL PRODUCTS</p>
                         <div class="block_content">
                             <ul class="products-block">
+
                                 <li>
                                     <div class="products-block-left">
                                         <a href="#">
@@ -484,6 +505,18 @@
                     <!-- ./subcategories -->
                     <!-- view-product-list-->
                     <div id="view-product-list" class="view-product-list">
+{#                        {% if messages %}#}
+{#                          <ul class="messages">#}
+{#                            {% for message in messages %}#}
+{#                              <li class="{{ message.tags }} callout" data-closable="fade-out">#}
+{#                                {{ message }}#}
+{#                                <button class="close-button" aria-label="Dismiss" type="button" data-close>#}
+{#                                  <span aria-hidden="true">&times;</span>#}
+{#                                </button>#}
+{#                              </li>#}
+{#                            {% endfor %}#}
+{#                          </ul>#}
+{#                        {% endif %}#}
                         <h2 class="page-heading">
                             <span class="page-heading-title">{% if category %}{{ category.name }}{% else %}Products{% endif %}</span>
                         </h2>
@@ -497,18 +530,21 @@
                         </ul>
                         <!-- PRODUCT LIST -->
                         <ul class="row product-list grid">
+{#                            {% if messages %}#}
+{#                                <div class="alert alert-success">#}
+{#                                  <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>#}
+{#                                  Product has been added to cart!#}
+{#                                </div>#}
+{#                            {% endif %}#}
                             {% for product in products %}
+
                                 <li class="col-sx-12 col-sm-4">
                                     <div class="product-container">
+
                                         <div class="left-block">
                                             <a href="{{ product.get_absolute_url }}">
                                                 <img class="img-responsive" alt="product" src="{% if product.image %}{{ MEDIA_URL }}{{ product.image}}{% else %}{% static 'data/p40.jpg' %}{% endif %}" />
                                             </a>
-    {#                                        <div class="quick-view">#}
-    {#                                                <a title="Add to my wishlist" class="heart" href="#"></a>#}
-    {#                                                <a title="Add to compare" class="compare" href="#"></a>#}
-    {#                                                <a title="Quick view" class="search" href="#"></a>#}
-    {#                                        </div>#}
                                             <div class="add-to-cart">
                                                 <form action="{% url "cart:cart-add-json" product.id %}" method="post" class="cart-add-form" data-redirect="{% url 'cart:cart-detail' %}">
                                                   {{ cart_product_form }}
@@ -544,9 +580,7 @@
 
 
                         </ul>
-                        <!-- ./PRODUCT LIST -->
                     </div>
-                    <!-- ./view-product-list-->
                     <div class="sortPagiBar pull-left">
                         <div class="bottom-pagination pull-left">
                             <nav>

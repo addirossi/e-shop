@@ -5229,3 +5229,7 @@ span.notify-right{
 .cart-add-form label{
     display: none;
 }
+
+.shopping-cart-box-ontop span.notify-left{
+    bottom: 12px !important;
+}

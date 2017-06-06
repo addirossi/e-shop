@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 class Category (models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50, db_index=True, unique=True)
-    parent = models.ForeignKey('self', null=True, blank=True)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
 
     class Meta:
         ordering = ['name']
@@ -39,6 +39,7 @@ class Brand (models.Model):
 
     def get_absolute_url(self):
         return reverse('shop:products-by-brand', args=[self.id])
+
 
 class Product (models.Model):
     category = models.ForeignKey(Category, verbose_name='Category')

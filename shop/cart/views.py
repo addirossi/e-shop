@@ -7,6 +7,7 @@ from django.views.decorators.http import require_POST
 from shop.catalog.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
+from django.contrib import messages
 
 
 @require_POST
@@ -17,6 +18,7 @@ def cart_add(request, product_id):
     if form.is_valid():
         cd = form.cleaned_data
         cart.add(product=product, quantity=cd['quantity'], update_quantity=cd['update'])
+        messages.success(request, 'Product added to your cart', extra_tags='success')
     return redirect('cart:cart-detail')
 
 
@@ -28,6 +30,7 @@ def cart_add_2(request, product_id):
     if form.is_valid():
         cd = form.cleaned_data
         cart.add(product=product, quantity=cd['quantity'], update_quantity=cd['update'])
+        messages.success(request, 'Product added to your cart', extra_tags='success')
         if cd['update']:
             res['redirect'] = False
     else:
