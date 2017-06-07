@@ -8,21 +8,14 @@ from django.core.urlresolvers import reverse
 class Category (models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50, db_index=True, unique=True)
-    parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
 
     class Meta:
         ordering = ['name']
         verbose_name = 'Category'
-        verbose_name_plural = 'Category'
+        verbose_name_plural = 'Categories'
 
     def __unicode__(self):
         return self.name
-
-    def is_parent(self):
-        return self.parent is None
-
-    def is_leaf(self):
-        return self.parent is not None
 
     def get_absolute_url(self):
         return reverse('shop:products-by-category', args=[self.slug])

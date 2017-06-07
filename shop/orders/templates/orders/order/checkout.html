@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{%  load static %}
+{% block title %} Checkout {% endblock title %}
+<!-- HEADER -->
+{% block content %}
+    <div class="columns-container">
+    <div class="container" id="columns">
+        <!-- breadcrumb -->
+        <div class="breadcrumb clearfix">
+            <a class="home" href="#" title="Return to Home">Home</a>
+            <span class="navigation-pipe">&nbsp;</span>
+            <span class="navigation_page">Checkout</span>
+        </div>
+        <!-- ./breadcrumb -->
+        <!-- page heading-->
+        <h2 class="page-heading">
+            <span class="page-heading-title2">Checkout</span>
+        </h2>
+        <!-- ../page heading-->
+        <div class="page-content checkout-page">
+
+            <h3 class="checkout-sep">Shipping Information</h3>
+            <div class="box-border">
+                <h2>Please, fill the form</h2>
+                    <form class="order-form" action="." method="post">
+                      {{ form.as_p }}
+                      {% csrf_token %}
+                      <input type="submit" value="Send">
+                    </form>
+{#                <ul>#}
+{##}
+{#                    <li class="row">#}
+{##}
+{#                        <div class="col-sm-6">#}
+{##}
+{#                            <label for="first_name_1" class="required">First Name</label>#}
+{#                            <input class="input form-control" type="text" name="" id="first_name_1">#}
+{##}
+{#                        </div><!--/ [col] -->#}
+{##}
+{#                        <div class="col-sm-6">#}
+{##}
+{#                            <label for="last_name_1" class="required">Last Name</label>#}
+{#                            <input class="input form-control" type="text" name="" id="last_name_1">#}
+{##}
+{#                        </div><!--/ [col] -->#}
+{##}
+{#                    </li><!--/ .row -->#}
+{##}
+{#                    <li class="row">#}
+{##}
+{#                        <div class="col-sm-6">#}
+{##}
+{#                            <label for="company_name_1">Company Name</label>#}
+{#                            <input class="input form-control" type="text" name="" id="company_name_1">#}
+{##}
+{#                        </div><!--/ [col] -->#}
+{##}
+{#                        <div class="col-sm-6">#}
+{##}
+{#                            <label for="email_address_1" class="required">Email Address</label>#}
+{#                            <input class="input form-control" type="text" name="" id="email_address_1">#}
+{##}
+{#                        </div><!--/ [col] -->#}
+{##}
+{#                    </li><!--/ .row -->#}
+{##}
+{#                    <li class="row">#}
+{##}
+{#                        <div class="col-xs-12">#}
+{##}
+{#                            <label for="address_1" class="required">Address</label>#}
+{#                            <input class="input form-control" type="text" name="" id="address_1">#}
+{##}
+{#                        </div><!--/ [col] -->#}
+{##}
+{#                    </li><!--/ .row -->#}
+{##}
+{#                    <li class="row">#}
+{##}
+{#                        <div class="col-sm-6">#}
+{##}
+{#                            <label for="city_1" class="required">City</label>#}
+{#                            <input class="input form-control" type="text" name="" id="city_1">#}
+{##}
+{#                        </div><!--/ [col] -->#}
+{##}
+{#                        <div class="col-sm-6">#}
+{##}
+{#                            <label class="required">State/Province</label>#}
+{##}
+{#                            <div class="custom_select">#}
+{##}
+{#                                <select class="input form-control" name="">#}
+{##}
+{#                                    <option value="Alabama">Alabama</option>#}
+{#                                    <option value="Illinois">Illinois</option>#}
+{#                                    <option value="Kansas">Kansas</option>#}
+{##}
+{#                                </select>#}
+{##}
+{#                            </div>#}
+{##}
+{#                        </div><!--/ [col] -->#}
+{##}
+{#                    </li><!--/ .row -->#}
+{##}
+{#                    <li class="row">#}
+{##}
+{#                        <div class="col-sm-6">#}
+{##}
+{#                            <label for="postal_code_1" class="required">Zip/Postal Code</label>#}
+{#                            <input class="input form-control" type="text" name="" id="postal_code_1">#}
+{##}
+{#                        </div><!--/ [col] -->#}
+{##}
+{#                        <div class="col-sm-6">#}
+{##}
+{#                            <label class="required">Country</label>#}
+{##}
+{#                            <div class="custom_select">#}
+{##}
+{#                                <select class="input form-control" name="">#}
+{##}
+{#                                    <option value="USA">USA</option>#}
+{#                                    <option value="Australia">Australia</option>#}
+{#                                    <option value="Austria">Austria</option>#}
+{#                                    <option value="Argentina">Argentina</option>#}
+{#                                    <option value="Canada">Canada</option>#}
+{##}
+{#                                </select>#}
+{##}
+{#                            </div>#}
+{##}
+{#                        </div><!--/ [col] -->#}
+{##}
+{#                    </li><!--/ .row -->#}
+{##}
+{#                    <li class="row">#}
+{##}
+{#                        <div class="col-sm-6">#}
+{##}
+{#                            <label for="telephone_1" class="required">Telephone</label>#}
+{#                            <input class="input form-control" type="text" name="" id="telephone_1">#}
+{##}
+{#                        </div><!--/ [col] -->#}
+{##}
+{#                        <div class="col-sm-6">#}
+{##}
+{#                            <label for="fax_1">Fax</label>#}
+{#                            <input class="input form-control" type="text" name="" id="fax_1">#}
+{##}
+{#                        </div><!--/ [col] -->#}
+{##}
+{#                    </li><!--/ .row -->#}
+{##}
+{#                </ul>#}
+            </div>
+
+            <h3 class="checkout-sep">Order Review</h3>
+            <div class="box-border">
+                <table class="table table-bordered table-responsive cart_summary">
+                    <thead>
+                        <tr>
+                            <th class="cart_product">Product</th>
+                            <th>Description</th>
+                            <th>Avail.</th>
+                            <th>Unit price</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                            <th  class="action"><i class="fa fa-trash-o"></i></th>
+                        </tr>
+                    </thead>
+                    {% for item in cart  %}
+                        <tbody>
+                            <tr>
+                                <td class="cart_product">
+                                    <a href="#"><img src="{% static 'data/product-100x122.jpg' %}" alt="Product"></a>
+                                </td>
+                                <td class="cart_description">
+                                    <p class="product-name"><a href="#">{{ item.product.name }}</a></p>
+                                    <small class="cart_ref">SKU : #123654999</small><br>
+                                    <small><a href="#">Color : Beige</a></small><br>
+                                    <small><a href="#">Size : S</a></small>
+                                </td>
+                                <td class="cart_avail"><span class="label label-success">In stock</span></td>
+                                <td class="price"><span>{{ item.price }} €</span></td>
+                                <td class="qty">
+                                    <input class="form-control input-sm" type="text" value="{{ item.quantity }} ">
+                                    <a href="#"><i class="fa fa-caret-up"></i></a>
+                                    <a href="#"><i class="fa fa-caret-down"></i></a>
+                                </td>
+                                <td class="price">
+                                    <span>{{ item.total_price }}</span>
+                                </td>
+                                <td class="action">
+                                    <a href="#">Delete item</a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    {% endfor %}
+{#                    <tfoot>#}
+{#                        <tr>#}
+{#                            <td colspan="2" rowspan="2"></td>#}
+{#                            <td colspan="3">Total products (tax incl.)</td>#}
+{#                            <td colspan="2">122.38 €</td>#}
+{#                        </tr>#}
+{#                        <tr>#}
+{#                            <td colspan="3"><strong>Total</strong></td>#}
+{#                            <td colspan="2"><strong>122.38 €</strong></td>#}
+{#                        </tr>#}
+{#                    </tfoot>#}
+                </table>
+                <button class="button pull-right">Place Order</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

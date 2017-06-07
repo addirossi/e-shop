@@ -11,10 +11,10 @@ class Offer(models.Model):
     offer_description = models.TextField(max_length=200)
     discount = models.PositiveIntegerField(blank=True, null=True)
     expires = models.DateField()
-    products = models.ManyToManyField(Product)
+    products = models.ManyToManyField(Product, related_name='offers')
 
     def __unicode__(self):
-        return self.name
+        return self.offer_name
 
     def __str__(self):
-        return self.name
+        return self.offer_name

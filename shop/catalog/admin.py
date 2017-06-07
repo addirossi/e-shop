@@ -6,7 +6,7 @@ from .models import Category,Product, Brand
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'parent']
+    list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name', )}
 
 

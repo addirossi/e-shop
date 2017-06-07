@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404
 
-from shop.catalog.filters import ProductFilter
 from .models import Category, Product, Brand
 from shop.cart.forms import CartAddProductForm
 
@@ -19,7 +18,7 @@ def products_list(request, category_slug=None):
 
     filtered_brands = [int(x) for x in filtered_brands]
 
-    categories = Category.objects.filter(parent__isnull=True)
+    categories = Category.objects.all()
 
     products = Product.objects.filter(available=True)
     brands = Brand.objects.all()
@@ -56,7 +55,6 @@ def products_list(request, category_slug=None):
         'category': category,
         'categories': categories,
         'products': products,
-        'cart_product_form': cart_product_form,
         'brands': brands,
         'filtered_brands': filtered_brands,
         'sort_field': sort_field,
@@ -67,8 +65,10 @@ def products_list(request, category_slug=None):
 
 def product_details(request, product_id):
     product = get_object_or_404(Product, id=product_id, available=True)
+    categories = Category.objects.all()
     cart_product_form = CartAddProductForm()
     return render(request, 'catalog/details.html', {
         'product': product,
+        'categories': categories,
         'cart_product_form': cart_product_form,
     })

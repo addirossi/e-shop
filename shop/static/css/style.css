@@ -5243,3 +5243,11 @@ span.notify-right{
     background: #ff3366;
     color: #fff;
 }
+
+.form-action div.button-group form.cart-add-form div.attributes {
+    display: inline-flex !important;
+}
+
+.attribute-list .product-qty {
+    margin: 0px 20px;
+}
